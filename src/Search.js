@@ -6,14 +6,24 @@ const Search = ({ page }) => {
   const [dataResult, setDataResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [apage, setPage] = useState(page);
+  const [a, setA] = useState(false);
   // console.log("check input ", searchQuery);
-  // console.log("check page search ", page);
-  var url = `https://api.unsplash.com/search/photos/?page=${page}&query=react&client_id=4PYFdyOl-1xu-XpoWGEzZtNydvi7lCLB5zdXSK6vLhI`;
-  if (searchQuery !== "") {
-    url = `https://api.unsplash.com/search/photos/?page=${page}&query=${searchQuery}&client_id=4PYFdyOl-1xu-XpoWGEzZtNydvi7lCLB5zdXSK6vLhI`;
-  }
+  console.log("check page search ", page);
 
+  // console.log(`check value bf ${searchQuery}`);
   useEffect(() => {
+    console.log("check apage search ", apage);
+    console.log("check a ", a);
+    setPage(page);
+    if (a === true) {
+      setPage(1);
+    }
+    setA(false);
+    var url = `https://api.unsplash.com/search/photos/?page=${apage}&query=react&client_id=4PYFdyOl-1xu-XpoWGEzZtNydvi7lCLB5zdXSK6vLhI`;
+    if (searchQuery !== "") {
+      url = `https://api.unsplash.com/search/photos/?page=${apage}&query=${searchQuery}&client_id=4PYFdyOl-1xu-XpoWGEzZtNydvi7lCLB5zdXSK6vLhI`;
+    }
     setLoading(true);
     const myTimeout = setTimeout(() => {
       fetch(
@@ -47,6 +57,10 @@ const Search = ({ page }) => {
       <input
         onChange={(e) => {
           setSearchQuery(e.target.value);
+          // console.log(`check value at ${searchQuery}`);
+          setPage(1);
+          setA(true);
+          setDataResult([]);
         }}
       />
       <h1>Search Results</h1>
